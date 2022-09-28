@@ -1,11 +1,19 @@
-# automation-full-wdio
+# Test automation with webdriver.io
 
-Automation in webdriver.io framework
+## Prerequisites
+- Java 11+
+- Node.js version 14+ with chocolatey (when on Windows)
 
-## Cvičení 1: seznámení s webdriver.io
+## Run tests
 
-Otevři si terminál (TODO nastavení správného terminálu) a napiš do něj
-
-npx wdio run
-
-Při prvním spuštění může vyskočit okno
+1. Install dependencies 
+In terminal, execute command
+```shell
+npm install
+```
+2. Run tests
+In terminal, execute command
+```shell
+wdio
+```
+A confirmation window to allow webdriver to control your browser may pop-up when running the tests for the first time. Confirm it to allow.
