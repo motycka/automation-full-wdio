@@ -1,0 +1,27 @@
+{
+    "name": "automation-full-wdio",
+    "version": "0.1.0",
+    "private": true,
+    "main": "wdio.conf.js",
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/cli": "^7.13.0",
+        "@babel/core": "^7.13.8",
+        "@babel/preset-env": "^7.13.9",
+        "@babel/register": "^7.13.8",
+        "@wdio/cli": "^7.24.0",
+        "@wdio/devtools-service": "^7.24.0",
+        "@wdio/firefox-profile-service": "^7.24.0",
+        "@wdio/local-runner": "^7.24.0",
+        "@wdio/mocha-framework": "^7.24.0",
+        "@wdio/spec-reporter": "^7.24.0",
+        "chromedriver": "^105.0.0",
+        "wdio-chromedriver-service": "^7.3.2",
+        "wdio-edgedriver-service": "^1.2.0",
+        "wdio-geckodriver-service": "^3.0.5",
+        "wdio-vscode-service": "^4.0.7"
+    },
+    "scripts": {
+        "wdio": "wdio run wdio.conf.js"
+    }
+}
