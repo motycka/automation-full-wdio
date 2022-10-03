@@ -1,7 +1,7 @@
 /**
  * Lesson 7: exercise 1
  */
-import LoginPage from '../../../pageobjects/login.page.js';
+import LoginPage from './pages/login.page.js';
 import {username, password} from '../../fixtures.js'
 
 describe('Login Page', () => {
