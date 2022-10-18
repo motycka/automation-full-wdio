@@ -90,7 +90,7 @@ describe('Applications Page', () => {
         })
     });
 
-    it.only('should filter in applications', () => {
+    it('should filter in applications', () => {
         const searchInput = $('input[type="search"]');
         const loading = $('#DataTables_Table_0_processing');
         const searchText = 'mar';
