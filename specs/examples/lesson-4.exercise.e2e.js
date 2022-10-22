@@ -1,7 +1,7 @@
 /**
- * Lesson 3: exercise 1
+ * Lesson 4: exercise 1
  */
-import {username, password} from '../fixtures.js'
+import {username, password, userFullName} from '../fixtures.js'
 
 describe('Login Page', () => {
 
@@ -11,53 +11,53 @@ describe('Login Page', () => {
     });
 
     it('should show login form', () => {
+
         const emailField = $('#email');
-        console.log('Email field is dislayed: ' + emailField.isDisplayed());
-        console.log('Email field is dislayed: ' + emailField.isEnabled());
+        expect(emailField).toBeDisplayed();
+        expect(emailField).toBeEnabled();
 
         const passwordField = $('#password');
-        console.log('Password field is dislayed: ' + passwordField.isDisplayed());
-        console.log('Password field is dislayed: ' + passwordField.isEnabled());
+        expect(passwordField).toBeDisplayed();
+        expect(passwordField).toBeEnabled();
 
         const loginButton = $('.btn-primary');
-        console.log('Login button is dislayed: ' + loginButton.isDisplayed());
-        console.log('Login button text is: ' + loginButton.getText());
+        expect(loginButton.getText()).toEqual('Přihlásit');
     });
 
     it('should login with valid credentials', () => {
         const emailField = $('#email');
         const passwordField = $('#password');
         const loginButton = $('.btn-primary');
+        const userNameDropdown = $('.navbar-right').$('[data-toggle="dropdown"]');
 
         emailField.setValue(username);
         passwordField.setValue(password);
         loginButton.click();
 
-        const userNameDropdown = $('.navbar-right').$('[data-toggle="dropdown"]');
-        console.log('User currently logged in: ' + userNameDropdown.getText());
+        expect(userNameDropdown.getText()).toEqual(userFullName);
     });
 
     it('should not login with invalid credentials', () => {
-
         const emailField = $('#email');
         const passwordField = $('#password');
         const loginButton = $('.btn-primary');
+        const toastMessage = $('.toast-message');
+        const fieldError = $('.invalid-feedback');
 
         emailField.setValue(username);
         passwordField.setValue('invalid');
         loginButton.click();
 
         // na stránce je jednak toast message
-        const toastMessage = $('.toast-message');
-        console.log('Error: ' + toastMessage.getText());
+        expect(toastMessage.getText()).toEqual('Některé pole obsahuje špatně zadanou hodnotu');
 
         // ale také validační message ve formuláři
-        const fieldError = $('.invalid-feedback');
-        console.log('Field error: ' + fieldError.getText());
+        expect(fieldError.getText()).toEqual('Tyto přihlašovací údaje neodpovídají žadnému záznamu.');
 
-        console.log('Email field is dislayed: ' + emailField.isDisplayed());
-        console.log('Password field is dislayed: ' + passwordField.isDisplayed());
-        console.log('Login button is dislayed: ' + loginButton.isDisplayed());
+        // stále vidíme login formulář
+        expect(emailField).toBeDisplayed();
+        expect(passwordField).toBeDisplayed();
+        expect(loginButton).toBeDisplayed();
     });
 
     it('should logout', () => {
@@ -72,13 +72,14 @@ describe('Login Page', () => {
         passwordField.setValue(password);
         loginButton.click();
 
-        console.log('User currently logged in: ' + userNameDropdown.getText());
+        // zkontrolujeme, že jsme přihlášeni, jinak by test byl nevalidní
+        expect(userNameDropdown.getText()).toEqual(userFullName);
 
         userNameDropdown.click();
         logoutLink.click();
 
-        console.log('User is logged in: ' + userNameDropdown.isDisplayed());
-        console.log('Navbar text: ' + navbarRight.getText());
+        expect(userNameDropdown.isDisplayed()).toBeFalsy();
+        expect(navbarRight.getText()).toEqual('Přihlásit');
     });
 });
 
@@ -94,25 +95,42 @@ describe('Applications Page', () => {
     });
 
     it('should list all applications', () => {
-        const rows = $('.dataTable').$('tbody').$$('tr');
-        console.log('There are ' + rows.length + ' rows in the table:');
+        const table = $('.dataTable').$('tbody');
+        const rows = table.$$('tr');
+
+        expect(rows.length).toEqual(13);
+
         rows.forEach(row => {
             console.log(row.getText());
+            const cols = row.$$('td');
+            expect(cols[0].getText()).toMatch(/[a-zA-Z]/);
+            expect(cols[1].getText()).toMatch(/(\d{2}.\d{2}.\d{4}|\d{2}.\d{2}. - \d{2}.\d{2}.\d{4})/);
+            expect(cols[2].getText()).toMatch(/(Bankovní převod|FKSP|Hotově|Složenka)/);
+            // nebo
+            expect(cols[2].getText()).toHaveText(['Bankovní převod', 'FKSP', 'Hotově', 'Složenka']);
+            expect(cols[3].getText()).toMatch(/\d{1,3}(| \d{0,3}) Kč/);
         })
     });
 
     it('should filter in applications', () => {
         const searchInput = $('input[type="search"]');
+        const table = $('.dataTable').$('tbody')
         const loading = $('#DataTables_Table_0_processing');
         const searchText = 'mar';
+
+        const unfilteredRowsCount = table.$$('tr').length;
 
         searchInput.setValue(searchText);
         loading.waitForDisplayed({ reverse: true});
 
-        const rows = $('.dataTable').$('tbody').$$('tr');
-        console.log('There are ' + rows.length + ' rows in the table:');
-        rows.forEach(row => {
+        const filteredRows = table.$$('tr');
+
+        expect(filteredRows.length).toBeLessThan(unfilteredRowsCount);
+
+        filteredRows.forEach(row => {
             console.log(row.getText());
+            const cols = row.$$('td');
+            expect(cols[0]).toHaveTextContaining(searchText, { ignoreCase: true });
         });
     });
 });
