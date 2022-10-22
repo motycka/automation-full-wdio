@@ -103,12 +103,12 @@ describe('Applications Page', () => {
         rows.forEach(row => {
             console.log(row.getText());
             const cols = row.$$('td');
-            expect(cols[0].getText()).toMatch(/[a-zA-Z]/);
-            expect(cols[1].getText()).toMatch(/(\d{2}.\d{2}.\d{4}|\d{2}.\d{2}. - \d{2}.\d{2}.\d{4})/);
-            expect(cols[2].getText()).toMatch(/(Bankovní převod|FKSP|Hotově|Složenka)/);
+            expect(cols[0]).toHaveText(/[a-zA-Z]/);
+            expect(cols[1]).toHaveText(/(\d{2}.\d{2}.\d{4}|\d{2}.\d{2}. - \d{2}.\d{2}.\d{4})/);
+            expect(cols[2]).toHaveText(/(Bankovní převod|FKSP|Hotově|Složenka)/);
             // nebo
-            expect(cols[2].getText()).toHaveText(['Bankovní převod', 'FKSP', 'Hotově', 'Složenka']);
-            expect(cols[3].getText()).toMatch(/\d{1,3}(| \d{0,3}) Kč/);
+            expect(cols[2]).toHaveText(['Bankovní převod', 'FKSP', 'Hotově', 'Složenka']);
+            expect(cols[3]).toHaveText(/\d{1,3}(| \d{0,3}) Kč/);
         })
     });
 
