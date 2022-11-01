@@ -91,7 +91,7 @@ describe('Applications Page', () => {
         $('#email').setValue(username);
         $('#password').setValue(password);
         $('.btn-primary').click();
-        $('a=Přihlášky').click();
+        $('=Přihlášky').click();
     });
 
     it('should list all applications', () => {
