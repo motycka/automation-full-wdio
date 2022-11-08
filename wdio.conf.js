@@ -28,7 +28,7 @@ exports.config = {
             ]
         }
     }],
-    logLevel: 'info', // trace | debug | info | warn | error | silent
+    logLevel: 'silent', // trace | debug | info | warn | error | silent
     bail: 0,
     baseUrl: 'ADRESA TESTOVANE APLIKACE',
     waitforTimeout: 10000,
