@@ -1,13 +1,16 @@
 class ApplicationsPage {
 
-    get applicationsLink() { return $('=Přihlášky'); }
-    get searchField() { return $('input[type="search"]'); }
-    get loading() { return $('#DataTables_Table_0_processing'); }
+    constructor() {
+        this.url = '/admin/prihlasky';
+    }
+
     get table() { return $('.dataTable'); }
     get rows() { return this.table.$('tbody').$$('tr'); }
+    get loading() { return $('#DataTables_Table_0_processing'); }
+    get searchField() { return $('input[type="search"]'); }
 
-    goToApplications() {
-        this.applicationsLink.click();
+    open() {
+        browser.url(this.url);
     }
 
     waitForTableToLoad() {

@@ -10,7 +10,7 @@ describe('Applications Page', () => {
     beforeEach(() => {
         LoginPage.open();
         LoginPage.login(username, password)
-        ApplicationsPage.goToApplications();
+        ApplicationsPage.open();
     });
 
     it('should list all applications', () => {
