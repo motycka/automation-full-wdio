@@ -1,5 +1,5 @@
 /**
- * Lesson 6: exercise 2
+ * Lesson 7: exercise 1
  */
 import {username, password} from '../../fixtures.js'
 import LoginPage from './pages/login.page';

@@ -20,7 +20,7 @@ describe('Login Page', () => {
 
     it('should login with valid credentials', () => {
 
-        LoginPage.login(username, password)
+        LoginPage.login(username, password);
 
         expect(LoginPage.getCurrentUser()).toEqual(userFullName);
     });
