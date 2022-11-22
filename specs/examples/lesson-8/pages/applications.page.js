@@ -13,7 +13,7 @@ class ApplicationsPage extends AppPage {
     }
 
     waitForTableToLoad() {
-        this.loading.waitForDisplayed({ reverse: true});
+        this.loading.waitForDisplayed({ reverse: true });
     }
 
     searchInTable(searchText) {
@@ -22,7 +22,15 @@ class ApplicationsPage extends AppPage {
 
     getTableRows() {
         this.waitForTableToLoad();
-        return this.rows;
+        return this.rows.map(row => {
+            const cols = row.$$('td');
+            return {
+                name: cols[0].getText(),
+                date: cols[1].getText(),
+                paymentType: cols[2].getText(),
+                toPay: cols[3].getText()
+            };
+        });
     }
 }
 
